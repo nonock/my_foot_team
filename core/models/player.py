@@ -1,11 +1,24 @@
 from django.db import models
+from django.utils.translation import gettext as _
+
+from core.models.mixin import ApiFootBallMixin, PlayerStatMixin
 
 
-class Player(models.Model):
-    name = models.CharField(max_length=200, verbose_name="Player name")
-    number = models.PositiveSmallIntegerField(verbose_name="Player number")
-    country = models.CharField(max_length=50, verbose_name="Player country")
+class Player(ApiFootBallMixin, PlayerStatMixin):
+    name = models.CharField(max_length=200, verbose_name=_("Player name"))
+    logo = models.CharField(max_length=200, verbose_name=_("Player image"))
+    number = models.PositiveSmallIntegerField(verbose_name=_("Player number"))
+    country = models.ForeignKey(
+        "core.Country", on_delete=models.CASCADE, blank=True, null=True
+    )
     type = models.CharField(
-        max_length=50, verbose_name="Player type"
+        max_length=50, verbose_name=_("Player type")
     )  # Todo add choices
-    age = models.PositiveSmallIntegerField(verbose_name="Player age")
+    age = models.PositiveSmallIntegerField(verbose_name=_("Player age"))
+    team = models.ForeignKey(
+        "core.Team",
+        on_delete=models.CASCADE,
+        verbose_name=_("Team"),
+        blank=True,
+        null=True,
+    )
