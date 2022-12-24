@@ -27,3 +27,8 @@ repos:
     - id: autoflake
       args: [ "--in-place", "--remove-all-unused-imports", "--remove-unused-variables", "--expand-star-imports", "--ignore-init-module-imports" ]
       files: \.py$
+- repo: https://github.com/sourcery-ai/sourcery
+  rev: v1.0.2
+  hooks:
+    - id: sourcery
+      args: [--diff=git diff HEAD, --no-summary]
